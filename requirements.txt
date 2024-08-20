@@ -1,7 +1,4 @@
 aiogram==3.10.0
 alembic==1.13.2
-APScheduler==3.10.4
 numpy==2.0.1
-reverse_geocoder==1.5.1
-SQLAlchemy==2.0.31
-asyncpg==0.29.0
+python-dotenv
