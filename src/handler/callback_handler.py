@@ -132,7 +132,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext, bot = Bot):
                     caption = f'''✨<b><i>Новое обьявление</i></b>✨\n📍<b>Адрес: </b>{result['address']}\n📍<b>Продавец: </b><a href = "https://t.me/{callback.from_user.username}">{result['name_user']}</a>\n📍<b>Стоимость: </b>{result['praice']}\n📍<b>Описание: </b>{result['description']}''',
                     parse_mode = 'HTML')
                     ]
-    await bot.send_media_group(chat_id = -1002149371351, media = media_list, reply_to_message_id = 1)
+    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 5)
     await state.clear()
 
     await callback.message.answer('Ваше обьявление успешно опубликованно✅')
@@ -211,7 +211,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext, bot = Bot):
                     caption = f'''✨<b><i>Новый искатель</i></b>✨\n📍<b>Адрес поиска: </b>{result['address']}\n📍<b>Искатель: </b><a href = "https://t.me/{callback.from_user.username}">{result['name_user']}</a>\n📍<b>Желаемая цена: </b>{result['praice']}\n📍<b>Описание: </b>{result['description']}''',
                     parse_mode = 'HTML')
                     ]
-    await bot.send_media_group(chat_id = -1002149371351, media = media_list, reply_to_message_id = 4)
+    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 6)
     await state.clear()
 
     await callback.message.answer('Ваше обьявление успешно опубликованно✅')
