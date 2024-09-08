@@ -5,6 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters.callback_data import CallbackData
 
 import keybord.inline_keybord as in_key
+import keybord.reply_keybord as re_key
 
 
 router_callback = Router()
@@ -43,15 +44,22 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext):
 @router_callback.message(Anketa_arend.address)
 async def proverka_pod(message: Message, state: FSMContext):
     await message.answer('Адрес записали, теперь укажите ваше имя\n\n\
-Пример: Дмитрий')
+Пример: Дмитрий', reply_markup = re_key.key_1)
     await state.update_data(address = message.text)
     await state.set_state(Anketa_arend.name_user)
 
 @router_callback.message(Anketa_arend.name_user)
 async def proverka_pod(message: Message, state: FSMContext):
-    await message.answer('Ваше имя записанно, теперь напишите описание к обьявлению\n\n\
+    if message.text == 'Использовать ник 📝':
+        await message.answer('Ваше имя записанно, теперь напишите описание к обьявлению\n\n\
 Пример: Квартира сдаёться в хорошом состоянии, свежий ремонт, приятные соседи')
-    await state.update_data(name_user = message.text)
+        await state.update_data(name_user = message.from_user.username)
+
+    if message.text != 'Использовать ник 📝': 
+        await message.answer('Ваше имя записанно, теперь напишите описание к обьявлению\n\n\
+Пример: Квартира сдаёться в хорошом состоянии, свежий ремонт, приятные соседи')
+        await state.update_data(name_user = message.from_user.username)
+
     await state.set_state(Anketa_arend.description)
 
 @router_callback.message(Anketa_arend.description)
@@ -132,7 +140,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext, bot = Bot):
                     caption = f'''✨<b><i>Новое обьявление</i></b>✨\n📍<b>Адрес: </b>{result['address']}\n📍<b>Продавец: </b><a href = "https://t.me/{callback.from_user.username}">{result['name_user']}</a>\n📍<b>Стоимость: </b>{result['praice']}\n📍<b>Описание: </b>{result['description']}''',
                     parse_mode = 'HTML')
                     ]
-    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 36)
+    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 19)
     await state.clear()
 
     await callback.message.answer('Ваше обьявление успешно опубликованно✅')
@@ -153,9 +161,16 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext):
 
 @router_callback.message(Anketa_arend_pull.address)
 async def proverka_pod(message: Message, state: FSMContext):
-    await message.answer('Адрес записали, теперь укажите ваше имя\n\n\
-Пример: Дмитрий')
-    await state.update_data(address = message.text)
+    if message.text == 'Использовать ник 📝':
+        await message.answer('Ваше имя записанно, теперь напишите описание к обьявлению\n\n\
+Пример: Квартира сдаёться в хорошом состоянии, свежий ремонт, приятные соседи')
+        await state.update_data(name_user = message.from_user.username)
+
+    if message.text != 'Использовать ник 📝': 
+        await message.answer('Ваше имя записанно, теперь напишите описание к обьявлению\n\n\
+Пример: Квартира сдаёться в хорошом состоянии, свежий ремонт, приятные соседи')
+        await state.update_data(name_user = message.from_user.username)
+
     await state.set_state(Anketa_arend_pull.name_user)
 
 @router_callback.message(Anketa_arend_pull.name_user)
@@ -211,7 +226,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext, bot = Bot):
                     caption = f'''✨<b><i>Новый искатель</i></b>✨\n📍<b>Адрес поиска: </b>{result['address']}\n📍<b>Искатель: </b><a href = "https://t.me/{callback.from_user.username}">{result['name_user']}</a>\n📍<b>Желаемая цена: </b>{result['praice']}\n📍<b>Описание: </b>{result['description']}''',
                     parse_mode = 'HTML')
                     ]
-    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 35)
+    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 21)
     await state.clear()
 
     await callback.message.answer('Ваше обьявление успешно опубликованно✅')
