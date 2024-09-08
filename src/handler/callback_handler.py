@@ -151,8 +151,6 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext):
     await callback.message.delete()
 
 
-
-
 @router_callback.callback_query(F.data == 'anketa_claim')
 async def proverka_pod(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer('Хорошо, введите адрес района поиска\n\n\
@@ -160,6 +158,14 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Anketa_arend_pull.address)
 
 @router_callback.message(Anketa_arend_pull.address)
+async def proverka_pod(message: Message, state: FSMContext):
+    await state.update_data(address = message.from_user.username)
+    await message.answer('Адрес записали, теперь укажите ваше имя\n\n\
+Пример: Дмитрий', reply_markup = re_key.key_1)
+
+    await state.set_state(Anketa_arend_pull.name_user)
+
+@router_callback.message(Anketa_arend_pull.name_user)
 async def proverka_pod(message: Message, state: FSMContext):
     if message.text == 'Использовать ник 📝':
         await message.answer('Ваше имя записанно, теперь напишите описание к обьявлению\n\n\
@@ -171,13 +177,6 @@ async def proverka_pod(message: Message, state: FSMContext):
 Пример: Квартира сдаёться в хорошом состоянии, свежий ремонт, приятные соседи')
         await state.update_data(name_user = message.from_user.username)
 
-    await state.set_state(Anketa_arend_pull.name_user)
-
-@router_callback.message(Anketa_arend_pull.name_user)
-async def proverka_pod(message: Message, state: FSMContext):
-    await message.answer('Ваше имя записанно, теперь напишите описание к вашему обьявлению\n\n\
-Пример: Ищу квартиру для долговременной аренды, не пью, вечеринок и тусовок не устраиваю, живу спокойно не комфликтно')
-    await state.update_data(name_user = message.text)
     await state.set_state(Anketa_arend_pull.description)
 
 @router_callback.message(Anketa_arend_pull.description)
