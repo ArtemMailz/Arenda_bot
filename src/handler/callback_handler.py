@@ -156,7 +156,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext):
 @router_callback.callback_query(F.data == 'anketa_claim')
 async def proverka_pod(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer('Хорошо, введите адрес района поиска\n\n\
-Пример: г. Владивосток, р-он Первомайский')
+Пример: г. Владивосток, р-он Первомайский', reply_markup = re_key.key_1)
     await state.set_state(Anketa_arend_pull.address)
 
 @router_callback.message(Anketa_arend_pull.address)
