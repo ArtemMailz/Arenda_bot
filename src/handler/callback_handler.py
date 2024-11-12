@@ -7,6 +7,12 @@ from aiogram.filters.callback_data import CallbackData
 import keybord.inline_keybord as in_key
 import keybord.reply_keybord as re_key
 
+import os
+import dotenv as dot
+
+
+dot.load_dotenv('.env')
+ID_CHAT = os.getenv('ID_CHAT')
 
 router_callback = Router()
 
@@ -140,7 +146,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext, bot = Bot):
                     caption = f'''✨<b><i>Новое обьявление</i></b>✨\n📍<b>Адрес: </b>{result['address']}\n📍<b>Продавец: </b><a href = "https://t.me/{callback.from_user.username}">{result['name_user']}</a>\n📍<b>Стоимость: </b>{result['praice']}\n📍<b>Описание: </b>{result['description']}''',
                     parse_mode = 'HTML')
                     ]
-    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 19)
+    await bot.send_media_group(chat_id = ID_CHAT, media = media_list, reply_to_message_id = 1)
     await state.clear()
 
     await callback.message.answer('Ваше обьявление успешно опубликованно✅')
@@ -225,7 +231,7 @@ async def proverka_pod(callback: CallbackQuery, state: FSMContext, bot = Bot):
                     caption = f'''✨<b><i>Новый искатель</i></b>✨\n📍<b>Адрес поиска: </b>{result['address']}\n📍<b>Искатель: </b><a href = "https://t.me/{callback.from_user.username}">{result['name_user']}</a>\n📍<b>Желаемая цена: </b>{result['praice']}\n📍<b>Описание: </b>{result['description']}''',
                     parse_mode = 'HTML')
                     ]
-    await bot.send_media_group(chat_id = -1002185953665, media = media_list, reply_to_message_id = 21)
+    await bot.send_media_group(chat_id = ID_CHAT, media = media_list, reply_to_message_id = 2)
     await state.clear()
 
     await callback.message.answer('Ваше обьявление успешно опубликованно✅')
